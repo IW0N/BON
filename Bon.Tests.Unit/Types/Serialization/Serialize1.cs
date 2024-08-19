@@ -6,12 +6,14 @@
 
         public float b { get; set; }
 
+        public Serialize2 test { get; set; }
+
         public byte c { get; set; }
 
         public string String { get; set; }
 
-        public string[] array { get; set; }
+        public Serialize2 abra { get; set; }
 
-        public Serialize2 test { get; set; }
+        public string[] array { get; set; }
     }
 }
