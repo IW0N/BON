@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Reflection;
-namespace Tson.Enum
+namespace Bon.Enum
 {
     public class KeyEnumerable : IEnumerable<MemberInfo>
     {
         private readonly IEnumerable<MemberInfo> _propsAndFields;
         public KeyEnumerable(Type rootType)
         {
-            _propsAndFields = rootType.GetTsonMembers();
+            _propsAndFields = rootType.GetBonMembers();
         }
 
         public IEnumerator<MemberInfo> GetEnumerator() => _propsAndFields.GetEnumerator();

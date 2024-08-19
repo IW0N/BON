@@ -1,10 +1,10 @@
-﻿using Tson.Options;
+﻿using Bon.Options;
 
-namespace Tson.Converters
+namespace Bon.Converters
 {
-    public class ByteConverter : TsonConverter<byte>
+    public class ByteConverter : BonConverter<byte>
     {
-        public override byte Read(TsonReader reader, Type typeToConvert, TsonContext context)
+        public override byte Read(BonReader reader, Type typeToConvert, BonContext context)
         {
             var success = reader.ReadByte(out byte result);
             if(!success)
@@ -14,7 +14,7 @@ namespace Tson.Converters
             return result;
         }
 
-        public override void Write(TsonWriter writer, byte data, TsonContext context)
+        public override void Write(BonWriter writer, byte data, BonContext context)
         {
             writer.WriteByte(data);
         }

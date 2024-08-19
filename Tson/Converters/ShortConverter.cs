@@ -1,10 +1,10 @@
-﻿using Tson.Options;
+﻿using Bon.Options;
 
-namespace Tson.Converters
+namespace Bon.Converters
 {
-    public class ShortConverter : TsonConverter<short>
+    public class ShortConverter : BonConverter<short>
     {
-        public override short Read(TsonReader reader, Type typeToConvert, TsonContext context)
+        public override short Read(BonReader reader, Type typeToConvert, BonContext context)
         {
             reader.ReadByte(out byte a);
             reader.ReadByte(out byte b);
@@ -12,7 +12,7 @@ namespace Tson.Converters
             return result;
         }
 
-        public override void Write(TsonWriter writer, short data, TsonContext context)
+        public override void Write(BonWriter writer, short data, BonContext context)
         {
             writer.WriteByte((byte)data);
             writer.WriteByte((byte)(data>>8));

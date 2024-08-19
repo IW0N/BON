@@ -1,13 +1,13 @@
 ﻿
 using System.Runtime.InteropServices;
-using Tson.Converters;
-using Tson.Options;
+using Bon.Converters;
+using Bon.Options;
 
-namespace Tson.Serializers
+namespace Bon.Serializers
 {
-    public class IntConverter : TsonConverter<int>
+    public class IntConverter : BonConverter<int>
     {
-        public override int Read(TsonReader reader, Type typeToConvert, TsonContext context)
+        public override int Read(BonReader reader, Type typeToConvert, BonContext context)
         {
             var data = reader.ReadBytes(sizeof(int));
             var result = 0;
@@ -22,7 +22,7 @@ namespace Tson.Serializers
             return result;
         }
 
-        public override void Write(TsonWriter writer, int data, TsonContext context)
+        public override void Write(BonWriter writer, int data, BonContext context)
         {
             byte[] intBytes = BitConverter.GetBytes(data);
             writer.WriteBytes(intBytes);

@@ -1,17 +1,17 @@
-﻿using Tson.Converters;
-using Tson.Options;
-using Tson.Tests.Unit.Types.Sorting;
+﻿using Bon.Converters;
+using Bon.Options;
+using Bon.Tests.Unit.Types.Sorting;
 
-namespace Tson.Tests.Unit.Converters
+namespace Bon.Tests.Unit.Converters
 {
-    internal class TestType1_3Converter : TsonConverter<TestType1_3>
+    internal class TestType1_3Converter : BonConverter<TestType1_3>
     {
-        public override TestType1_3 Read(TsonReader reader, Type typeToConvert, TsonContext context)
+        public override TestType1_3 Read(BonReader reader, Type typeToConvert, BonContext context)
         {
             throw new NotImplementedException();
         }
 
-        public override void Write(TsonWriter writer, TestType1_3 data, TsonContext context)
+        public override void Write(BonWriter writer, TestType1_3 data, BonContext context)
         {
             throw new NotImplementedException();
         }

@@ -1,13 +1,13 @@
 ﻿using System.Reflection;
-using Tson.Options;
-using static Tson.TsonSerializer;
+using Bon.Options;
+using static Bon.BonSerializer;
 
-namespace Tson.Converters
+namespace Bon.Converters
 {
-    public class EnumConverter : TsonConverter<System.Enum>
+    public class EnumConverter : BonConverter<System.Enum>
     {
-        Dictionary<Type, TsonConverter> _convertMap = [];
-        public override void Init(TsonOptions options)
+        Dictionary<Type, BonConverter> _convertMap = [];
+        public override void Init(BonOptions options)
         {
             IEnumerable<Type> underTypes = [
                 typeof(sbyte), typeof(byte), 
@@ -23,7 +23,7 @@ namespace Tson.Converters
             }
         }
 
-        public override System.Enum Read(TsonReader reader, Type typeToConvert, TsonContext context)
+        public override System.Enum Read(BonReader reader, Type typeToConvert, BonContext context)
         {
             var underType = System.Enum.GetUnderlyingType(typeToConvert);
             var converter = _convertMap[underType];
@@ -35,7 +35,7 @@ namespace Tson.Converters
             return enumObj;
         }
 
-        public override void Write(TsonWriter writer, System.Enum data, TsonContext context)
+        public override void Write(BonWriter writer, System.Enum data, BonContext context)
         {
             var valueField = GetEnumValueField(data.GetType());
             //4 | 16 | 32 = 00000100 | 00010000 | 00100000 = 00110100v2 = 52v10

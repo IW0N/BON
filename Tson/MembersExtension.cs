@@ -4,18 +4,18 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Tson.Attributes;
+using Bon.Attributes;
 
-namespace Tson
+namespace Bon
 {
     public static class MembersExtension
     {
-        public static IEnumerable<MemberInfo> GetTsonMembers(this Type dataType) => 
+        public static IEnumerable<MemberInfo> GetBonMembers(this Type dataType) => 
             dataType
                 .GetMembers()
                 .Where(
                     m => (m is PropertyInfo || m is FieldInfo) &&
-                    m.GetCustomAttribute<TsonIgnoreAttribute>() is null)
+                    m.GetCustomAttribute<BonIgnoreAttribute>() is null)
                 .OrderBy(m => m.Name);
     }
 }

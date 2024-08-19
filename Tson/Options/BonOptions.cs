@@ -1,8 +1,8 @@
-﻿using Tson.Converters;
+﻿using Bon.Converters;
 
-namespace Tson.Options
+namespace Bon.Options
 {
-    public class TsonOptions
+    public class BonOptions
     {
         public LengthSize DataArrayLengthSize { get; set; } = LengthSize.UInt16;
 

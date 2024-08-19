@@ -1,6 +1,6 @@
-﻿using Tson.Converters;
+﻿using Bon.Converters;
 
-namespace Tson
+namespace Bon
 {
 
     public class ConverterListSorter
@@ -8,16 +8,16 @@ namespace Tson
         private readonly List<(int start, int count)> _sequences = [];
         private readonly List<int> _skips = [];
         private readonly List<Type> _types = [];
-        private readonly List<ITsonConvertible> _main = [];
+        private readonly List<IBonConvertible> _main = [];
         private const int UNKNOWN = -1;
 
-        public ConverterListSorter(IEnumerable<ITsonConvertible> unsorted)
+        public ConverterListSorter(IEnumerable<IBonConvertible> unsorted)
         {
             _main.AddRange(unsorted);
             _types.AddRange(unsorted.Select(u => u.Type));
         }
 
-        public IEnumerable<ITsonConvertible> Sort()
+        public IEnumerable<IBonConvertible> Sort()
         {
             int index = 0;
             while (index < _main.Count)

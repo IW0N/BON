@@ -1,25 +1,25 @@
 ﻿using System.Reflection;
-using Tson.Enum;
-using Tson.Options;
+using Bon.Enum;
+using Bon.Options;
 
-namespace Tson.Converters
+namespace Bon.Converters
 {
-    public class ObjectConverter : TsonConverter<object>
+    public class ObjectConverter : BonConverter<object>
     {
         public override bool CanConvert(Type typeToConvert) =>
             typeToConvert.IsClass || (typeToConvert.IsValueType && !typeToConvert.IsPrimitive);
 
-        public override void Write(TsonWriter writer, object data, TsonContext context)
+        public override void Write(BonWriter writer, object data, BonContext context)
         {
             var valueEnumer = new ValueEnumerable(data);
             foreach (var value in valueEnumer)
             {
-                var converter = TsonSerializer.GetConverter(value.GetType(),context.Options);
+                var converter = BonSerializer.GetConverter(value.GetType(),context.Options);
                 converter.BaseWrite(writer, value, context);
             }
         }
 
-        public override object Read(TsonReader reader, Type typeToConvert, TsonContext context)
+        public override object Read(BonReader reader, Type typeToConvert, BonContext context)
         {
             var obj = Activator.CreateInstance(typeToConvert);
             
@@ -29,7 +29,7 @@ namespace Tson.Converters
             {
                 if(key is FieldInfo field)
                 {
-                    var conv = TsonSerializer.GetConverter(field.FieldType);
+                    var conv = BonSerializer.GetConverter(field.FieldType);
 
                     var value = conv.BaseRead(reader, field.FieldType, context);
                     
@@ -37,7 +37,7 @@ namespace Tson.Converters
                 }
                 else if (key is PropertyInfo prop)
                 {
-                    var conv = TsonSerializer.GetConverter(prop.PropertyType);
+                    var conv = BonSerializer.GetConverter(prop.PropertyType);
 
                     var value = conv.BaseRead(reader, prop.PropertyType, context);
 

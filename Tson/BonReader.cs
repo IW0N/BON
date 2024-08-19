@@ -1,16 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Tson.Converters;
-using Tson.Enum;
-using Tson.Options;
+using Bon.Converters;
+using Bon.Enum;
+using Bon.Options;
 
-namespace Tson
+namespace Bon
 {
-    public class TsonReader
+    public class BonReader
     {
         private readonly byte[] _data;
-        private readonly TsonContext _context;
+        private readonly BonContext _context;
 
-        public TsonReader(byte[] data, TsonContext context)
+        public BonReader(byte[] data, BonContext context)
         {       
             _data = data;
             _context = context;
@@ -58,14 +58,14 @@ namespace Tson
         /// Read bytes and parse them to typed value
         /// <para>
         /// <c>ATTENTION!</c> This may lead to infity cycle 
-        /// if it was invoked inside <see cref="TsonConverter{T}"/> and <c>T</c> is <typeparamref name="T"/>
+        /// if it was invoked inside <see cref="BonConverter{T}"/> and <c>T</c> is <typeparamref name="T"/>
         /// </para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public T ReadData<T>()
         {
-            var converter = TsonSerializer.GetConverter<T>(_context.Options);
+            var converter = BonSerializer.GetConverter<T>(_context.Options);
             return converter.Read(this, typeof(T), _context);
         }
 

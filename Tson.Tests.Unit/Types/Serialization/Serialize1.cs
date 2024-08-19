@@ -1,4 +1,4 @@
-﻿namespace Tson.Tests.Unit.Types.Serialization
+﻿namespace Bon.Tests.Unit.Types.Serialization
 {
     public class Serialize1
     {

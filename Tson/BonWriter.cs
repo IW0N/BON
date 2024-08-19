@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Drawing;
-using Tson.Converters;
-using Tson.Options;
+using Bon.Converters;
+using Bon.Options;
 
-namespace Tson
+namespace Bon
 {
-    public class TsonWriter
+    public class BonWriter
     {
         private readonly IList<byte> _data;
-        private readonly TsonContext _context;
-        private readonly TsonConverter _lengthConverter;
+        private readonly BonContext _context;
+        private readonly BonConverter _lengthConverter;
         private bool _rewriteDataLength;
         private readonly EditableStack<int> _dataArrayLengths;
         private readonly Stack<int> _dataArrayStarts;
@@ -17,12 +17,12 @@ namespace Tson
         private bool InsideDataArray => _dataArrayLengths.Count > 0;
         private Type LengthType => _lenSize.GetSizeType();
 
-        public TsonWriter(IList<byte> data, TsonContext context)
+        public BonWriter(IList<byte> data, BonContext context)
         {
             _data = data;
             _context = context;
             _lenSize = _context.Options.DataArrayLengthSize;
-            _lengthConverter = TsonSerializer.GetConverter(_lenSize.GetSizeType(), _context.Options);
+            _lengthConverter = BonSerializer.GetConverter(_lenSize.GetSizeType(), _context.Options);
             _dataArrayStarts = new Stack<int>();
             _dataArrayLengths = new EditableStack<int>();
             _rewriteDataLength = false;
@@ -47,7 +47,7 @@ namespace Tson
 
         public void WriteData<T>(T data)
         {
-            var converter = TsonSerializer.GetConverter<T>(_context.Options) ?? throw new Exception("");
+            var converter = BonSerializer.GetConverter<T>(_context.Options) ?? throw new Exception("");
             var prevEnd = _context.Index;
             converter.Write(this, data, _context);
             var newEnd = _context.Index;
@@ -55,7 +55,7 @@ namespace Tson
             RewriteDataLengthsIfRequired(prevEnd, newEnd, RewriteMode.UseNewEndPos);
         }
 
-        public void WriteData(object data, TsonConverter converter)
+        public void WriteData(object data, BonConverter converter)
         {
             var prevEndPos = _context.Index;
             converter.BaseWrite(this, data, _context);

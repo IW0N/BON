@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
-using Tson.Options;
+using Bon.Options;
 
-namespace Tson.Converters
+namespace Bon.Converters
 {
     struct BinDecimal
     {
@@ -9,15 +9,15 @@ namespace Tson.Converters
         public long b;
     }
 
-    public class DecimalConverter : TsonConverter<decimal>
+    public class DecimalConverter : BonConverter<decimal>
     {
-        private TsonConverter<long> _converter;
-        public override void Init(TsonOptions options)
+        private BonConverter<long> _converter;
+        public override void Init(BonOptions options)
         {
-            _converter = TsonSerializer.GetConverter<long>(options);
+            _converter = BonSerializer.GetConverter<long>(options);
         }
 
-        public override decimal Read(TsonReader reader, Type typeToConvert, TsonContext context)
+        public override decimal Read(BonReader reader, Type typeToConvert, BonContext context)
         {
             var a = _converter.Read(reader, typeToConvert, context);
             var b = _converter.Read(reader,typeToConvert,context);
@@ -26,7 +26,7 @@ namespace Tson.Converters
             return result;
         }
 
-        public override void Write(TsonWriter writer, decimal data, TsonContext context)
+        public override void Write(BonWriter writer, decimal data, BonContext context)
         {
             var c = Unsafe.BitCast<decimal,BinDecimal>(data);
             _converter.Write(writer, c.a, context);

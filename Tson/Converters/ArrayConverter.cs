@@ -1,21 +1,21 @@
 ﻿using System.Collections;
-using Tson.Options;
-using Tson.Serializers;
+using Bon.Options;
+using Bon.Serializers;
 
-namespace Tson.Converters
+namespace Bon.Converters
 {
-    public class ArrayConverterFactory : TsonConverterFactory
+    public class ArrayConverterFactory : BonConverterFactory
     {
         public override Type Type => typeof(Array);
 
         public override bool CanConvert(Type typeToConvert) =>
             typeToConvert.BaseType == typeof(Array);
 
-        public override TsonConverter BuildConverter(Type type, TsonOptions options)
+        public override BonConverter BuildConverter(Type type, BonOptions options)
         {
             var elementType = type.GetElementType();
             var conv = Activator.CreateInstance(typeof(ArrayConverter<>).MakeGenericType(elementType));
-            return (TsonConverter)conv;
+            return (BonConverter)conv;
         }
     }
 

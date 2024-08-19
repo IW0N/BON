@@ -1,10 +1,10 @@
-using Tson.Tests.Unit.Types;
-using Tson;
-using Tson.Tests.Unit.Types.Serialization;
-using Tson.Enum;
+using Bon.Tests.Unit.Types;
+using Bon;
+using Bon.Tests.Unit.Types.Serialization;
+using Bon.Enum;
 using System.Text.Json;
 
-namespace Tson.Tests.Unit
+namespace Bon.Tests.Unit
 {
     public class SerializationTests
     {
@@ -25,9 +25,9 @@ namespace Tson.Tests.Unit
                 }
             };
             
-            var bytes = TsonSerializer.Serialize(src);
-            bytes = TsonSerializer.Serialize(src);
-            var deser = TsonSerializer.Deserialize<Serialize1>(bytes);
+            var bytes = BonSerializer.Serialize(src);
+            bytes = BonSerializer.Serialize(src);
+            var deser = BonSerializer.Deserialize<Serialize1>(bytes);
 
             //todo: дописать проверку на валидность десериализованных значений
             Assert.Pass();

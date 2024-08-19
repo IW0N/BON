@@ -1,15 +1,15 @@
-﻿using Tson.Converters;
-using Tson.Serializers;
-using Tson.Tests.Unit.Converters;
+﻿using Bon.Converters;
+using Bon.Serializers;
+using Bon.Tests.Unit.Converters;
 
-namespace Tson.Tests.Unit
+namespace Bon.Tests.Unit
 {
     public class TestSorting
     {
         [Test]
         public void Test()
         {
-            ITsonConvertible[] convertibles = 
+            IBonConvertible[] convertibles = 
             [
                 new ListConverterFactory(),
                 new IntConverter(),

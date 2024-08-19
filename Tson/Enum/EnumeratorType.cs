@@ -1,4 +1,4 @@
-﻿namespace Tson.Enum
+﻿namespace Bon.Enum
 {
     public enum EnumeratorType
     {

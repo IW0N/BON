@@ -1,4 +1,4 @@
-﻿namespace Tson
+﻿namespace Bon
 {
     internal class EditableStack<T> : List<T>
     {

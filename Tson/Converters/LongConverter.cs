@@ -1,11 +1,11 @@
 ﻿using System.Runtime.InteropServices;
-using Tson.Options;
+using Bon.Options;
 
-namespace Tson.Converters
+namespace Bon.Converters
 {
-    public class LongConverter : TsonConverter<long>
+    public class LongConverter : BonConverter<long>
     {
-        public override long Read(TsonReader reader, Type typeToConvert, TsonContext context)
+        public override long Read(BonReader reader, Type typeToConvert, BonContext context)
         {
             var data = reader.ReadBytes(sizeof(long));
             long result = 0;
@@ -20,7 +20,7 @@ namespace Tson.Converters
             return result;
         }
 
-        public override void Write(TsonWriter writer, long data, TsonContext context)
+        public override void Write(BonWriter writer, long data, BonContext context)
         {
             long mask = 0xff;
             for (int i = 0; i < sizeof(long); i++)

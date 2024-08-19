@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Reflection;
 
-namespace Tson.Enum
+namespace Bon.Enum
 {
     internal class ValueEnumerator : IEnumerator
     {
@@ -34,7 +34,7 @@ namespace Tson.Enum
         public ValueEnumerator(object data)
         {
             _data = data;
-            _propsAndFields = _data.GetType().GetTsonMembers();
+            _propsAndFields = _data.GetType().GetBonMembers();
             _enumerator = _propsAndFields.GetEnumerator();
         }
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace Tson.Enum
+namespace Bon.Enum
 {
     public class ValueEnumerable(object data) : IEnumerable
     {

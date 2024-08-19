@@ -1,16 +1,16 @@
 ﻿using System.Collections;
-using Tson.Options;
+using Bon.Options;
 
-namespace Tson.Enum
+namespace Bon.Enum
 {
-    public class TsonBinaryEnumerable:IEnumerable<byte>
+    public class BonBinaryEnumerable:IEnumerable<byte>
     {
         protected readonly byte[] _data;
         protected readonly int _startIndex;
-        protected readonly TsonContext _context;
+        protected readonly BonContext _context;
         public readonly int count;
 
-        public TsonBinaryEnumerable(byte[] data, int count, TsonContext context)
+        public BonBinaryEnumerable(byte[] data, int count, BonContext context)
         {
             _data = data;
             this.count = count;

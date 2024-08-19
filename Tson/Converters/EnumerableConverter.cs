@@ -1,17 +1,17 @@
 ﻿using System.Collections;
-using Tson.Options;
+using Bon.Options;
 using System.Reflection;
 
-namespace Tson.Converters
+namespace Bon.Converters
 {
-    public abstract class EnumerableConverter<T> : TsonConverter<T> where T:IEnumerable 
+    public abstract class EnumerableConverter<T> : BonConverter<T> where T:IEnumerable 
     {
         private readonly Type _enumerableType = typeof(IEnumerable);
 
-        public override T Read(TsonReader reader, Type typeToConvert, TsonContext context)
+        public override T Read(BonReader reader, Type typeToConvert, BonContext context)
         {
             var valueType = GetValueType(typeToConvert);
-            var converter = TsonSerializer.GetConverter(valueType);
+            var converter = BonSerializer.GetConverter(valueType);
             var listType = typeof(List<>).MakeGenericType(valueType);
             var list = (IList)Activator.CreateInstance(listType);
             var end = reader.ReadDataLength()+context.Index;
@@ -27,10 +27,10 @@ namespace Tson.Converters
 
         protected abstract T Cast(IList source, Type valType);
 
-        public override void Write(TsonWriter writer, T data, TsonContext context)
+        public override void Write(BonWriter writer, T data, BonContext context)
         {
             var valueType = GetValueType(data.GetType());
-            var converter = TsonSerializer.GetConverter(valueType);
+            var converter = BonSerializer.GetConverter(valueType);
             var fist = context.Index;
             writer.BeginWriteDataArray();
             foreach (var value in data)

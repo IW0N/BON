@@ -1,26 +1,26 @@
 ﻿using System.Collections;
 using System.Text;
-using Tson.Options;
+using Bon.Options;
 
-namespace Tson.Converters
+namespace Bon.Converters
 {
-    public class StringConverter:TsonConverter<string>
+    public class StringConverter:BonConverter<string>
     {
-        private TsonConverter<byte[]> _converter;
+        private BonConverter<byte[]> _converter;
 
-        public override void Init(TsonOptions options)
+        public override void Init(BonOptions options)
         {
-            _converter = TsonSerializer.GetConverter<byte[]>(options);
+            _converter = BonSerializer.GetConverter<byte[]>(options);
         }
 
-        public override string Read(TsonReader reader, Type typeToConvert, TsonContext context)
+        public override string Read(BonReader reader, Type typeToConvert, BonContext context)
         {
             var len = reader.ReadDataLength();
             var bytes = reader.ReadBytes(len).ToArray();
             return Encoding.UTF8.GetString(bytes);
         }
 
-        public override void Write(TsonWriter writer, string data, TsonContext context)
+        public override void Write(BonWriter writer, string data, BonContext context)
         {
             var bts = Encoding.UTF8.GetBytes(data);
             

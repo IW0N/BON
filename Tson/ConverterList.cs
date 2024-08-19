@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections;
-using Tson.Converters;
-using Tson.Options;
+using Bon.Converters;
+using Bon.Options;
 
-namespace Tson
+namespace Bon
 {
-    public class ConverterList : IEnumerable<ITsonConvertible>
+    public class ConverterList : IEnumerable<IBonConvertible>
     {
         private IList<Type> _valueTypes = [];
-        private IList<ITsonConvertible> _converters = [];
+        private IList<IBonConvertible> _converters = [];
 
-        public ConverterList(IEnumerable<ITsonConvertible> convertibles)
+        public ConverterList(IEnumerable<IBonConvertible> convertibles)
         {
             var sorter = new ConverterListSorter(convertibles);
-            _converters = new List<ITsonConvertible>(sorter.Sort());
+            _converters = new List<IBonConvertible>(sorter.Sort());
         }
 
-        public void Add(ITsonConvertible convertible)
+        public void Add(IBonConvertible convertible)
         {
             var elementType = convertible.Type;
             
@@ -32,7 +32,7 @@ namespace Tson
             _converters.Insert(index, convertible);
         }
 
-        public void AddRange(IEnumerable<ITsonConvertible> convertibles)
+        public void AddRange(IEnumerable<IBonConvertible> convertibles)
         {
             foreach (var item in convertibles)
             {
@@ -62,7 +62,7 @@ namespace Tson
             return -1;
         }
 
-        public IEnumerator<ITsonConvertible> GetEnumerator() => _converters.GetEnumerator();
+        public IEnumerator<IBonConvertible> GetEnumerator() => _converters.GetEnumerator();
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }

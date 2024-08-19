@@ -1,8 +1,8 @@
-﻿using Tson.Options;
+﻿using Bon.Options;
 
-namespace Tson.Enum
+namespace Bon.Enum
 {
-    public class BinaryReadArea : TsonBinaryEnumerable
+    public class BinaryReadArea : BonBinaryEnumerable
     {
         public byte this[int localIndex]
         {
@@ -18,7 +18,7 @@ namespace Tson.Enum
         }
 
 
-        public BinaryReadArea(byte[] data, int count, TsonContext context) : base(data, count, context)
+        public BinaryReadArea(byte[] data, int count, BonContext context) : base(data, count, context)
         {
             
         }

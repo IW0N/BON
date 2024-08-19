@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
-using Tson.Options;
+using Bon.Options;
 
-namespace Tson.Converters
+namespace Bon.Converters
 {
     /*
     ---Концепция---
@@ -26,34 +26,34 @@ namespace Tson.Converters
     --> [0,0,0,23, 62, 0,13,104,101,108,108,111,044,032,115,116,114,105,110,103, 0,14,0,0,0,17, 0,0,0,0,0,0,2,98, 1,0]
      длина = 4+1+2+13+2+14 = 5+16+16 = 37 байт
     */
-    public abstract class TsonConverter : ITsonConvertible
+    public abstract class BonConverter : IBonConvertible
     {
         public virtual Type Type { get; }
 
         public virtual bool CanConvert(Type typeToConvert) =>
             typeToConvert == Type;
 
-        public virtual void Init(TsonOptions options) { }
+        public virtual void Init(BonOptions options) { }
 
-        public abstract void BaseWrite(TsonWriter writer, object data, TsonContext context);
+        public abstract void BaseWrite(BonWriter writer, object data, BonContext context);
 
-        public abstract object BaseRead(TsonReader reader, Type typeToConvert, TsonContext context);
+        public abstract object BaseRead(BonReader reader, Type typeToConvert, BonContext context);
     }
 
-    public abstract class TsonConverter<T> : TsonConverter
+    public abstract class BonConverter<T> : BonConverter
     {
         public override Type Type => typeof(T);
 
-        public abstract void Write(TsonWriter writer, T data, TsonContext context);
+        public abstract void Write(BonWriter writer, T data, BonContext context);
 
-        public abstract T Read(TsonReader reader, Type typeToConvert, TsonContext context);
+        public abstract T Read(BonReader reader, Type typeToConvert, BonContext context);
 
-        public override void BaseWrite(TsonWriter writer, object data, TsonContext context)
+        public override void BaseWrite(BonWriter writer, object data, BonContext context)
         {
             Write(writer, (T)data, context);
         }
 
-        public override object BaseRead(TsonReader reader, Type typeToConvert, TsonContext context)
+        public override object BaseRead(BonReader reader, Type typeToConvert, BonContext context)
         {
             return Read(reader, typeToConvert, context);
         }

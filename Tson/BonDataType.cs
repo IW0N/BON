@@ -1,6 +1,6 @@
-﻿namespace Tson
+﻿namespace Bon
 {
-    public enum TsonDataType
+    public enum BonDataType
     {
         Fixed,
         DataArray
