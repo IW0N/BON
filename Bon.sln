@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tson", "Tson\Tson.csproj", "{77F2CABC-ABF3-47B5-B5A3-4922FC7B66C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bon", "Tson\Bon.csproj", "{77F2CABC-ABF3-47B5-B5A3-4922FC7B66C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tson.Tests.Unit", "Tson.Tests.Unit\Tson.Tests.Unit.csproj", "{84C013DD-96D2-4FB1-A722-01AAF3453D17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bon.Tests.Unit", "Tson.Tests.Unit\Bon.Tests.Unit.csproj", "{84C013DD-96D2-4FB1-A722-01AAF3453D17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
