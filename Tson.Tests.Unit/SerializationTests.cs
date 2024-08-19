@@ -2,6 +2,7 @@ using Tson.Tests.Unit.Types;
 using Tson;
 using Tson.Tests.Unit.Types.Serialization;
 using Tson.Enum;
+using System.Text.Json;
 
 namespace Tson.Tests.Unit
 {
@@ -23,8 +24,9 @@ namespace Tson.Tests.Unit
                     www = 404
                 }
             };
-
+            
             var bytes = TsonSerializer.Serialize(src);
+            bytes = TsonSerializer.Serialize(src);
             var deser = TsonSerializer.Deserialize<Serialize1>(bytes);
 
             //todo: дописать проверку на валидность десериализованных значений

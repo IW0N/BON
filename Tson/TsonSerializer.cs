@@ -9,33 +9,32 @@ namespace Tson
     public static class TsonSerializer
     {
         internal static readonly TsonOptions rootOptions;
-        static readonly ObjectConverter _objectConverter;
 
         static TsonSerializer()
         {
             IEnumerable<ITsonConvertible> convertibles =
             [
                 new ByteConverter(),
-                //new PlainFixedConverter<byte,bool>(),
-                //new PlainFixedConverter<byte,char>(),
-                //new PlainFixedConverter<byte,sbyte>(),
+                new PlainFixedConverter<byte,bool>(),
+                new PlainFixedConverter<byte,char>(),
+                new PlainFixedConverter<byte,sbyte>(),
 
-                //new ShortConverter(),
-                //new PlainFixedConverter<short,ushort>(),
+                new ShortConverter(),
+                new PlainFixedConverter<short,ushort>(),
 
-                //new IntConverter(),
-                //new PlainFixedConverter<int,uint>(),
-                //new PlainFixedConverter<int,float>(),
+                new IntConverter(),
+                new PlainFixedConverter<int,uint>(),
+                new PlainFixedConverter<int,float>(),
 
-                //new LongConverter(),
-                //new PlainFixedConverter<long,ulong>(),
-                //new PlainFixedConverter<long,double>(),
-                //new PlainFixedConverter<long,DateTime>(),
+                new LongConverter(),
+                new PlainFixedConverter<long,ulong>(),
+                new PlainFixedConverter<long,double>(),
+                new PlainFixedConverter<long,DateTime>(),
 
                 new ArrayConverterFactory(),
 
                 new DecimalConverter(),
-                //new PlainFixedConverter<decimal,Guid>(),
+                new PlainFixedConverter<decimal,Guid>(),
 
                 new EnumConverter(),
 
@@ -43,26 +42,19 @@ namespace Tson
 
                 new StringConverter(),
                 
-                new ListConverterFactory(),
-
-                
+                new ListConverterFactory()
             ];
 
             rootOptions = new()
             {
-                DataArrayLengthSize = LengthSize.UInt16
-            }; 
-
-            rootOptions.Converters.AddRange(convertibles);
+                DataArrayLengthSize = LengthSize.UInt16,
+                Converters = new ConverterList(convertibles)
+            };
 
             foreach (var c in rootOptions.Converters)
             {
                 c.Init(rootOptions);
             }
-
-            _objectConverter = new ObjectConverter();
-
-            _objectConverter.Init(rootOptions);
         }
 
         public static byte[] Serialize<T>(T data, TsonOptions? options = null)
@@ -100,7 +92,7 @@ namespace Tson
             var convertible = (options ?? rootOptions).Converters.FirstOrDefault(c => c.CanConvert(dataType));
             if (convertible is null)
             {
-                return _objectConverter;
+                throw new Exception($"Unknown converter for type {dataType}");
             }
             else if(convertible is TsonConverter converter)
             {
@@ -125,9 +117,10 @@ namespace Tson
             }
             else
             {
-                var opt = new TsonOptions(rootOptions.Converters) 
-                { 
-                    DataArrayLengthSize = userOptions.DataArrayLengthSize
+                var opt = new TsonOptions()
+                {
+                    DataArrayLengthSize = userOptions.DataArrayLengthSize,
+                    Converters = new ConverterList(userOptions.Converters)
                 };
                 opt.Converters.AddRange(userOptions.Converters);
                 return opt;

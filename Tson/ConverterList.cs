@@ -9,12 +9,13 @@ namespace Tson
     {
         private IList<Type> _valueTypes = [];
         private IList<ITsonConvertible> _converters = [];
-        private readonly TsonOptions _options;
 
-        public ConverterList(TsonOptions options)
+        public ConverterList(IEnumerable<ITsonConvertible> convertibles)
         {
-            _options = options;
+            var sorter = new ConverterListSorter(convertibles);
+            _converters = new List<ITsonConvertible>(sorter.Sort());
         }
+
         public void Add(ITsonConvertible convertible)
         {
             var elementType = convertible.Type;
@@ -38,18 +39,7 @@ namespace Tson
                 Add(item);
             }
         }
-        public TsonConverter<T> GetConverter<T>()
-        {
-            var findingType = typeof(T);
-            var convertible = _converters.First(c=>c.CanConvert(findingType));
-            if(convertible is TsonConverter<T> converter)
-            {
-                return converter;
-            }
-            var factory = (TsonConverterFactory)convertible;
-            return (TsonConverter<T>)factory.BuildConverter(findingType,_options);
-        }
-        
+
         private int GetIndex(Type elementType)
         {
             var lastIndex = _valueTypes.Count - 1;
