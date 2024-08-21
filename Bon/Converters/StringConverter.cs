@@ -15,6 +15,11 @@ namespace Bon.Converters
 
         public override string Read(BonReader reader, Type typeToConvert, BonContext context)
         {
+            if (reader.IsNull())
+            {
+                return null;
+            }
+
             var len = reader.ReadDataLength();
             var bytes = reader.ReadBytes(len).ToArray();
             return Encoding.UTF8.GetString(bytes);

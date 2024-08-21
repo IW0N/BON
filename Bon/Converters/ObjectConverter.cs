@@ -11,16 +11,46 @@ namespace Bon.Converters
 
         public override void Write(BonWriter writer, object data, BonContext context)
         {
-            var valueEnumer = new ValueEnumerable(data);
-            foreach (var value in valueEnumer)
+            var isNullable = data.GetType().IsClass;
+            if (isNullable)
             {
-                var converter = BonSerializer.GetConverter(value.GetType(),context.Options);
-                converter.BaseWrite(writer, value, context);
+                var isNull = data is null;
+                writer.WriteNullFlag(isNull);
+                if (isNull)
+                {
+                    return;
+                }
+            }
+            
+            var valueEnumer = new ValueEnumerable(data);
+            
+            foreach (var kvp in valueEnumer)
+            {
+                Type t;
+                if(kvp.Key is PropertyInfo p)
+                {
+                    t = p.PropertyType;
+                }
+                else if (kvp.Key is FieldInfo f)
+                {
+                    t = f.FieldType;
+                }
+                else
+                {
+                    throw new Exception();
+                }
+                var converter = BonSerializer.GetConverter(t,context.Options);
+                converter.BaseWrite(writer, kvp.Value, context);
             }
         }
 
         public override object Read(BonReader reader, Type typeToConvert, BonContext context)
         {
+            if (typeToConvert.IsClass&&reader.IsNull())
+            {
+                return null;
+            }
+
             var obj = Activator.CreateInstance(typeToConvert);
             
             var keys = new KeyEnumerable(typeToConvert);

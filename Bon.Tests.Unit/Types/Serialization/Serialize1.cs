@@ -4,7 +4,7 @@
     {
         public int a { get; set; }
 
-        public float b { get; set; }
+        public float? b { get; set; }
 
         public Serialize2 test { get; set; }
 

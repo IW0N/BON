@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using Bon.Options;
-using System.Reflection;
 
 namespace Bon.Converters
 {
@@ -10,6 +9,11 @@ namespace Bon.Converters
 
         public override T Read(BonReader reader, Type typeToConvert, BonContext context)
         {
+            if (typeToConvert.IsClass && reader.IsNull())
+            {
+                return default;
+            }
+
             var valueType = GetValueType(typeToConvert);
             var converter = BonSerializer.GetConverter(valueType);
             var listType = typeof(List<>).MakeGenericType(valueType);
@@ -29,9 +33,13 @@ namespace Bon.Converters
 
         public override void Write(BonWriter writer, T data, BonContext context)
         {
+            if (typeof(T).IsClass)
+            {
+                writer.WriteNullFlag(data is null);
+            }
+
             var valueType = GetValueType(data.GetType());
             var converter = BonSerializer.GetConverter(valueType);
-            var fist = context.Index;
             writer.BeginWriteDataArray();
             foreach (var value in data)
             {

@@ -16,6 +16,12 @@ namespace Bon
             _context = context;
         }
 
+        public bool IsNull()
+        {
+            ReadByte(out var flag);
+            return flag == 0;
+        }
+
         public int ReadDataLength()
         {
             var start = _context.Index;

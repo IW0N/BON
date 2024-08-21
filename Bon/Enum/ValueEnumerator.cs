@@ -3,26 +3,26 @@ using System.Reflection;
 
 namespace Bon.Enum
 {
-    internal class ValueEnumerator : IEnumerator
+    internal class ValueEnumerator : IEnumerator<KeyValuePair<MemberInfo,object>>
     {
         private readonly object _data;
-        private readonly IEnumerator _enumerator;
+        private readonly IEnumerator<MemberInfo> _enumerator;
 
         //if type is ObjectData
         private readonly IEnumerable<MemberInfo> _propsAndFields;
 
-        public object? Current 
+        public KeyValuePair<MemberInfo,object> Current 
         { 
             get 
             {
                 var current = _enumerator?.Current;
                 if (current is PropertyInfo prop)
                 {
-                    return prop.GetValue(_data);
+                    return new(current, prop.GetValue(_data));
                 }
                 else if (current is FieldInfo field)
                 {
-                    return field.GetValue(_data);
+                    return new(current, field.GetValue(_data));
                 }
                 else
                 {
@@ -30,6 +30,8 @@ namespace Bon.Enum
                 }
             } 
         }
+
+        object IEnumerator.Current => Current;
 
         public ValueEnumerator(object data)
         {
@@ -43,6 +45,11 @@ namespace Bon.Enum
         public void Reset()
         {
             _enumerator.Reset();
+        }
+
+        public void Dispose()
+        {
+            _enumerator.Dispose();
         }
     }
 }

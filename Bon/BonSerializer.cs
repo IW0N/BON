@@ -45,7 +45,9 @@ namespace Bon
                 new ListConverterFactory(),
 
                 new DictionaryConverterFactory(),
-                new KeyValuePairConverterFactory()
+                new KeyValuePairConverterFactory(),
+
+                new NullableConverterFactory()
             ];
 
             rootOptions = new()

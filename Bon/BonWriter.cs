@@ -45,6 +45,11 @@ namespace Bon
             _context.Index += size;
         }
 
+        public void WriteNullFlag(bool isNull)
+        {
+            WriteByte((byte)(isNull ? 0 : 1));
+        }
+
         public void WriteData<T>(T data)
         {
             var converter = BonSerializer.GetConverter<T>(_context.Options) ?? throw new Exception("");
