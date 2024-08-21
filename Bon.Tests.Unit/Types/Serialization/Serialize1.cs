@@ -14,6 +14,8 @@
 
         public Serialize2 abra { get; set; }
 
+        public Dictionary<int,string> dict { get; set; }
+
         public string[] array { get; set; }
     }
 }

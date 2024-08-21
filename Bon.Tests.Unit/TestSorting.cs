@@ -7,6 +7,15 @@ namespace Bon.Tests.Unit
     public class TestSorting
     {
         [Test]
+        public void Test0()
+        {
+            var t = typeof(Dictionary<,>);
+            var d = new Dictionary<int,string>().GetType();
+
+            var a = d.IsAssignableTo(t);
+        }
+
+        [Test]
         public void Test()
         {
             IBonConvertible[] convertibles = 

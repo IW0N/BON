@@ -4,6 +4,7 @@ using Bon.Tests.Unit.Types.Serialization;
 using Bon.Enum;
 using System.Text.Json;
 using System.Reflection;
+using System.Text;
 
 namespace Bon.Tests.Unit
 {
@@ -28,10 +29,16 @@ namespace Bon.Tests.Unit
                 {
                     val = 999,
                     www = 127001
+                },
+                dict = new()
+                {
+                    { 22,"22" },
+                    { 100,"100" }
                 }
             };
-            
+
             var bytes = BonSerializer.Serialize(src);
+            var bJson = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(src)); 
             var deser = BonSerializer.Deserialize<Serialize1>(bytes);
             var equals = Compare(src, deser);
 
@@ -85,6 +92,21 @@ namespace Bon.Tests.Unit
                 }
             }
             return true;
+        }
+
+        private bool IsNullable(Type type)
+        {
+            if (type.IsClass)
+            {
+                return true;
+            }
+
+            while (type != null)
+            {
+
+            }
+
+            return false;
         }
     }
 }

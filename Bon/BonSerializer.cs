@@ -42,7 +42,10 @@ namespace Bon
 
                 new StringConverter(),
                 
-                new ListConverterFactory()
+                new ListConverterFactory(),
+
+                new DictionaryConverterFactory(),
+                new KeyValuePairConverterFactory()
             ];
 
             rootOptions = new()
