@@ -5,6 +5,9 @@ using Bon.Options;
 
 namespace Bon
 {
+    /// <summary>
+    /// Provides base methods for binary writing
+    /// </summary>
     public class BonWriter
     {
         private readonly IList<byte> _data;

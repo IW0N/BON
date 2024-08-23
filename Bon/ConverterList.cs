@@ -5,6 +5,9 @@ using Bon.Options;
 
 namespace Bon
 {
+    /// <summary>
+    /// List of <see cref="IBonConvertible"/> that contains items as tree struct
+    /// </summary>
     public class ConverterList : IEnumerable<IBonConvertible>
     {
         private IList<Type> _valueTypes = [];

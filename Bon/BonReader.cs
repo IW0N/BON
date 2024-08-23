@@ -5,6 +5,9 @@ using Bon.Options;
 
 namespace Bon
 {
+    /// <summary>
+    /// Provides base methods for reading data from byte array
+    /// </summary>
     public class BonReader
     {
         private readonly byte[] _data;

@@ -70,9 +70,9 @@ namespace Bon
 
             if (converter is null)
             {
-                //todo: make default ObjectConverter for this way
                 throw new Exception("Unknown type!");
             }
+
             var context = new BonContext { Index = 0, Options = concated };
 
             var writer = new BonWriter([], context);

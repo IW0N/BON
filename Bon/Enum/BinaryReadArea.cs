@@ -2,6 +2,10 @@
 
 namespace Bon.Enum
 {
+    /// <summary>
+    /// Area of reading bytes<br/>
+    /// It needs to not create new byte array
+    /// </summary>
     public class BinaryReadArea : BonBinaryEnumerable
     {
         public byte this[int localIndex]

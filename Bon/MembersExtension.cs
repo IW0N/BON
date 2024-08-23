@@ -10,6 +10,11 @@ namespace Bon
 {
     public static class MembersExtension
     {
+        /// <summary>
+        /// It gets properties and fields of <paramref name="dataType"/> excluding members with <see cref="BonIgnoreAttribute"/>
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <returns></returns>
         public static IEnumerable<MemberInfo> GetBonMembers(this Type dataType) => 
             dataType
                 .GetMembers()

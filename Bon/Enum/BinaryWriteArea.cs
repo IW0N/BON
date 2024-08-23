@@ -2,6 +2,9 @@
 
 namespace Bon.Enum
 {
+    /// <summary>
+    /// Write-only binary write area
+    /// </summary>
     public class BinaryWriteArea : BonBinaryEnumerable
     {
         public byte this[int localIndex] { 
