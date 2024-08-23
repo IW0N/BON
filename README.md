@@ -11,6 +11,6 @@ This is classical byte array, but with its size before first element
 This is class, struct, int or anymore with fixed size representation. In contrast to **byte array**, this doesn't contain length at begining.
 You can know length of fixed byte array by serializing type and by byte array if fixed byte array contains it.
 ## Nullable
-Nullable sign that value is null or not. If value is null, then used first byte of block is 0, if not null - 1.
+Nullable sign that value is null or not. If value is null, then first byte of block is 0, if not null 1.
 
 
