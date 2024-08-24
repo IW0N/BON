@@ -11,6 +11,7 @@ namespace Bon.Converters
         public override void Init(BonOptions options)
         {
             _converter = BonSerializer.GetConverter<byte[]>(options);
+            Inited = true;
         }
 
         public override string Read(BonReader reader, Type typeToConvert, BonContext context)

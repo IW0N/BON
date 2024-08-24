@@ -6,9 +6,6 @@ namespace Bon.Converters
     public class NullableConverterFactory : BonConverterFactory
     {
         public override Type Type => typeof(Nullable<>);
-
-        public override bool CanConvert(Type typeToConvert)=>
-            typeToConvert.IsGenericType && typeToConvert.GetGenericTypeDefinition() == Type;
         
         public override BonConverter BuildConverter(Type outputType, BonOptions options)
         {
@@ -25,6 +22,7 @@ namespace Bon.Converters
         public override void Init(BonOptions options)
         {
             _valueConverter = BonSerializer.GetConverter<T>(options);
+            Inited = true;
         }
 
         public override T? Read(BonReader reader, Type typeToConvert, BonContext context)

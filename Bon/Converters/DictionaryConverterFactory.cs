@@ -46,6 +46,7 @@ namespace Bon.Converters
         public override void Init(BonOptions options)
         {
             _kvpConverter = (KeyValuePairConverter<TKey, TVal>)BonSerializer.GetConverter<KeyValuePair<TKey,TVal>>(options);
+            Inited = true;
         }
 
         protected override Dictionary<TKey, TVal> Cast(IList source, Type valType)

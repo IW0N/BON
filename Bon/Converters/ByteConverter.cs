@@ -17,6 +17,8 @@ namespace Bon.Converters
         public override void Write(BonWriter writer, byte data, BonContext context)
         {
             writer.WriteByte(data);
+
+            Inited = true;
         }
     }
 }

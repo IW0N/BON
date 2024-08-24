@@ -20,11 +20,13 @@ namespace Bon.Converters
         public Type Type { get; }
 
         /// <summary>
-        /// Check it whether to can converts passed type
+        /// It checks whether to can convert passed type
         /// </summary>
         /// <param name="typeToConvert">Checking type</param>
         /// <returns></returns>
         public bool CanConvert(Type typeToConvert);
+
+        public bool Inited { get; }
 
         /// <summary>
         /// Invokes after constructing instance.<br/>
@@ -41,9 +43,15 @@ namespace Bon.Converters
     {
         public abstract Type Type { get; }
 
-        public virtual void Init(BonOptions options) { }
+        public bool Inited { get; protected set; }
 
-        public abstract bool CanConvert(Type typeToConvert);
+        public virtual void Init(BonOptions options)
+        {
+            Inited = true;
+        }
+
+        public virtual bool CanConvert(Type typeToConvert) =>
+            typeToConvert.IsGenericType && typeToConvert.GetGenericTypeDefinition() == Type;
 
         public abstract BonConverter BuildConverter(Type outputType, BonOptions options);
     }

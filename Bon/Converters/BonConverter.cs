@@ -12,10 +12,16 @@ namespace Bon.Converters
     {
         public virtual Type Type { get; }
 
+        public bool Inited { get; protected set; }
+
         public virtual bool CanConvert(Type typeToConvert) =>
             typeToConvert == Type;
 
-        public virtual void Init(BonOptions options) { }
+
+        public virtual void Init(BonOptions options)
+        {
+            Inited = true;
+        }
 
         public abstract void BaseWrite(BonWriter writer, object data, BonContext context);
 

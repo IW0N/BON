@@ -21,6 +21,8 @@ namespace Bon.Converters
                 var conv = GetConverter(numT, options);
                 _convertMap.Add(numT, conv);
             }
+
+            Inited = true;
         }
 
         public override System.Enum Read(BonReader reader, Type typeToConvert, BonContext context)

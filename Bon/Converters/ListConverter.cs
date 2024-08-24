@@ -15,9 +15,6 @@ namespace Bon.Converters
             converter.Init(options);
             return converter;
         }
-
-        public override bool CanConvert(Type typeToConvert) => 
-            typeToConvert.IsGenericType && typeToConvert.GetGenericTypeDefinition() == typeof(List<>);
     }
 
     public class ListConverter<T> : EnumerableConverter<List<T>>

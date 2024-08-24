@@ -17,6 +17,7 @@ namespace Bon.Converters
         public override void Init(BonOptions options)
         {
             _baseConverter = BonSerializer.GetConverter<TBase>(options);
+            Inited = true;
         }
         /// <summary>
         /// Converter takes TBase from byte array,<br/> 

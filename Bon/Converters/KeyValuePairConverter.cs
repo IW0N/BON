@@ -51,6 +51,8 @@ namespace Bon.Converters
             _valConverter = BonSerializer.GetConverter<TVal>(options);
             _keyConverter.Init(options);
             _valConverter.Init(options);
+
+            Inited = true;
         }
 
         public override KeyValuePair<TKey, TVal> Read(BonReader reader, Type typeToConvert, BonContext context)

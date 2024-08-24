@@ -9,6 +9,32 @@ namespace Bon.Options
     {
         public LengthSize DataArrayLengthSize { get; set; } = LengthSize.UInt16;
 
-        public ConverterList Converters { get; internal set; }
+        private ConverterList _converters=new ConverterList([]);
+        public ConverterList Converters
+        { 
+            get => _converters;
+            set 
+            {
+                _converters = value;
+
+                BonSerializer.Init();
+                _converters.AddRange(BonSerializer.RootOptions.Converters);
+                foreach (var val in value)
+                {
+                    if (!val.Inited)
+                    {
+                        val.Init(this);
+                    }
+                }
+            }
+        }
+
+        public BonOptions() { }
+
+        internal BonOptions(LengthSize lenSize, ConverterList list)
+        {
+            _converters = list;
+            DataArrayLengthSize = lenSize;
+        }
     }
 }

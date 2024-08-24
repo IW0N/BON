@@ -15,6 +15,7 @@ namespace Bon.Converters
         public override void Init(BonOptions options)
         {
             _converter = BonSerializer.GetConverter<long>(options);
+            Inited = true;
         }
 
         public override decimal Read(BonReader reader, Type typeToConvert, BonContext context)
