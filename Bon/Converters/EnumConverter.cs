@@ -4,9 +4,25 @@ using static Bon.BonSerializer;
 
 namespace Bon.Converters
 {
-    public class EnumConverter : BonConverter<System.Enum>
+    public class EnumConverterFactory : BonConverterFactory
+    {
+        public override Type Type => typeof(System.Enum);
+        public override bool CanConvert(Type typeToConvert) => 
+            typeToConvert.BaseType == Type;
+        
+        public override BonConverter BuildConverter(Type outputType, BonOptions options)
+        {
+            var converterType = typeof(EnumConverter<>).MakeGenericType(outputType);
+            var converter = (BonConverter)Activator.CreateInstance(converterType);
+            converter.Init(options);
+            return converter;
+        }
+    }
+
+    public class EnumConverter<T> : BonConverter<T> where T : System.Enum
     {
         Dictionary<Type, BonConverter> _convertMap = [];
+        
         public override void Init(BonOptions options)
         {
             IEnumerable<Type> underTypes = [
@@ -25,19 +41,19 @@ namespace Bon.Converters
             Inited = true;
         }
 
-        public override System.Enum Read(BonReader reader, Type typeToConvert, BonContext context)
+        public override T Read(BonReader reader, Type typeToConvert, BonContext context)
         {
             var underType = System.Enum.GetUnderlyingType(typeToConvert);
             var converter = _convertMap[underType];
             var value = converter.BaseRead(reader, underType, context);
 
-            var enumObj = (System.Enum)Activator.CreateInstance(typeToConvert);
+            var enumObj = (System.Enum)Activator.CreateInstance<T>();
             var valueField = GetEnumValueField(typeToConvert);
             valueField.SetValue(enumObj, value);
-            return enumObj;
+            return (T)enumObj;
         }
 
-        public override void Write(BonWriter writer, System.Enum data, BonContext context)
+        public override void Write(BonWriter writer, T data, BonContext context)
         {
             var valueField = GetEnumValueField(data.GetType());
             //4 | 16 | 32 = 00000100 | 00010000 | 00100000 = 00110100v2 = 52v10

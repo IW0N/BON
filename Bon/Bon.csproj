@@ -17,6 +17,8 @@
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageId>$(AssemblyName)-API</PackageId>
     <PackageTags>Binary object notation BON bon</PackageTags>
+    <Version>1.0.1</Version>
+    <FileVersion>1.0.0.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

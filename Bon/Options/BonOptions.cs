@@ -35,6 +35,10 @@ namespace Bon.Options
         {
             _converters = list;
             DataArrayLengthSize = lenSize;
+            foreach (var l in list)
+            {
+                l.Init(this);
+            }
         }
     }
 }

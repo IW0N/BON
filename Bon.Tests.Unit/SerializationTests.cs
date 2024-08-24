@@ -1,13 +1,20 @@
-using Bon.Tests.Unit.Types;
-using Bon;
 using Bon.Tests.Unit.Types.Serialization;
-using Bon.Enum;
 using System.Text.Json;
-using System.Reflection;
 using System.Text;
 
 namespace Bon.Tests.Unit
 {
+    enum Weeks
+    {
+        Monday, 
+        Tuesday,
+        Wednesday,
+        Thursday,
+        Friday,
+        Saturday,
+        Sunday
+    }
+
     public class SerializationTests
     {
         [Test]
@@ -39,58 +46,56 @@ namespace Bon.Tests.Unit
             };
 
             var bytes = BonSerializer.Serialize(src);
-            var bJson = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(src)); 
             var deser = BonSerializer.Deserialize<Serialize1>(bytes);
 
-            Assert.That(true);
+            var arraysEqual = EnumerablesAreEqual(src.array, deser.array);
+            var dictsEqual = EnumerablesAreEqual(src.dict, deser.dict);
+
+            var equals = src.String == deser.String &&
+                src.a == deser.a &&
+                src.c == deser.c &&
+                src.b == deser.b &&
+                src.test.val == deser.test.val &&
+                src.test.www == deser.test.www &&
+                arraysEqual &&
+                src.abra.val == deser.abra.val &&
+                src.abra.www == deser.abra.www &&
+                dictsEqual;
+
+            Assert.That(equals);
         }
 
-        private bool Compare(object obj1, object obj2)
+        [Test]
+        public void TestEnum()
         {
-            if (obj1 == null || obj2 == null)
-            {
-                return false;
-            }
-            if (!obj1.GetType().Equals(obj2.GetType()))
+            var testVal = Weeks.Wednesday;
+            var serialized = BonSerializer.Serialize(testVal);
+            var deserVal = BonSerializer.Deserialize<Weeks>(serialized);
+            Assert.That(deserVal == testVal);
+        }
+        
+        private bool EnumerablesAreEqual<T>(IEnumerable<T> a, IEnumerable<T> b)
+        {
+            if(a.Count() != b.Count())
             {
                 return false;
             }
 
-            Type type = obj1.GetType();
-            if (type.IsPrimitive || typeof(string).Equals(type))
+            var bEnumer = b.GetEnumerator();
+            foreach (var aVal in a)
             {
-                return obj1.Equals(obj2);
-            }
-            if (type.IsArray)
-            {
-                Array first = obj1 as Array;
-                Array second = obj2 as Array;
-                var en = first.GetEnumerator();
-                int i = 0;
-                while (en.MoveNext())
+                bEnumer.MoveNext();
+                var bVal = bEnumer.Current;
+                if (aVal is null && bVal is not null)
                 {
-                    if (!Compare(en.Current, second.GetValue(i)))
-                        return false;
-                    i++;
+                    return false;
+                }
+                if (aVal is not null && !aVal.Equals(bVal))
+                {
+                    return false;
                 }
             }
-            else
-            {
-                foreach (PropertyInfo pi in type.GetProperties(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public))
-                {
-                    var val = pi.GetValue(obj1);
-                    var tval = pi.GetValue(obj2);
-                    if (!Compare(val, tval))
-                        return false;
-                }
-                foreach (FieldInfo fi in type.GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public))
-                {
-                    var val = fi.GetValue(obj1);
-                    var tval = fi.GetValue(obj2);
-                    if (!Compare(val, tval))
-                        return false;
-                }
-            }
+
             return true;
         }
     }

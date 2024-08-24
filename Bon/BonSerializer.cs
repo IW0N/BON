@@ -11,6 +11,11 @@ namespace Bon
         internal static BonOptions RootOptions { get; private set; }
         internal static bool Inited { get; private set; }
 
+        static BonSerializer()
+        {
+            Init();
+        }
+
         public static byte[] Serialize<T>(T data, BonOptions? options = null)
         {
             options ??= RootOptions;
@@ -97,7 +102,7 @@ namespace Bon
                 new DecimalConverter(),
                 new PlainFixedConverter<decimal,Guid>(),
 
-                new EnumConverter(),
+                new EnumConverterFactory(),
 
                 new ObjectConverter(),
 
